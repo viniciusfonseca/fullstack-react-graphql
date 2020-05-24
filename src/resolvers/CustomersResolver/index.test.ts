@@ -1,30 +1,24 @@
 import 'reflect-metadata'
-import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
-import { createApolloServer } from '../../graphql/createApolloServer'
-import { ApolloServer, gql } from 'apollo-server'
-import { Container } from 'inversify'
-import { createContainer } from '../../services/createContainer'
+import { ApolloServerTestClient } from 'apollo-server-testing'
+import { gql } from 'apollo-server'
 import { assert } from 'chai'
-import { Connection, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { CustomerEntity } from '../../entities/CustomerEntity'
-import { DB_CONNECTION } from '../../services/bindDBConnection'
 import { AddressEntity } from '../../entities/AddressEntity'
+import { setupTest } from '../../tests/setupTest'
 
 describe('customers resolvers', () => {
 
-    let server: ApolloServer,
-        container: Container,
-        client: ApolloServerTestClient,
+    let client: ApolloServerTestClient,
         customers: Repository<CustomerEntity>,
         addresses: Repository<AddressEntity>
 
     before(async () => {
-        container = await createContainer()
-        const connection = container.get<Connection>(DB_CONNECTION)
-        server = await createApolloServer(container)
-        client = createTestClient(server)
-        customers = connection.getRepository(CustomerEntity)
-        addresses = connection.getRepository(AddressEntity)
+        const setup = await setupTest()
+
+        client = setup.client
+        customers = setup.repositories.customers
+        addresses = setup.repositories.addresses
     })
 
     beforeEach(async () => {
