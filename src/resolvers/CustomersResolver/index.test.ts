@@ -64,9 +64,10 @@ describe('customers resolvers', () => {
 
     it('lists customers', async () => {
 
+        const pending: Promise<any>[] = []
         for (let i = 0; i < 20; i++) {
             const code = Math.random().toString(16).replace('.', "")
-            await customers.save(Object.assign(new CustomerEntity(), {
+            const p = customers.save(Object.assign(new CustomerEntity(), {
                 name: `V-${code}`,
                 email: `v-${code}@example.com`,
                 address: Object.assign(new AddressEntity(), {
@@ -75,7 +76,10 @@ describe('customers resolvers', () => {
                     number: code
                 })
             }))
+            pending.push(p)
         }
+
+        await Promise.all(pending)
 
         const query = gql`query {
             getCustomers {
