@@ -1,6 +1,6 @@
 import { Resolver } from "type-graphql";
 
 @Resolver()
-export class ProductsResolver {
+export class OrdersResolver {
     
 }

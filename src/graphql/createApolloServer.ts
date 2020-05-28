@@ -5,7 +5,7 @@ import { Container } from "inversify"
 
 export async function createApolloServer(
     container: Container,
-    customApolloContextProvider = apolloContextProvider
+    contextProvider = apolloContextProvider
 ) {
 
     const schema = await createSchema(container)
@@ -15,7 +15,7 @@ export async function createApolloServer(
         tracing: true,
         cacheControl: true,
         context(context) {
-            return customApolloContextProvider(context, container)
+            return contextProvider(context, container)
         }
     })
 

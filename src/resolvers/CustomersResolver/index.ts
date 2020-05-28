@@ -6,6 +6,9 @@ import { DB_CONNECTION } from "../../services/bindDBConnection";
 import { Connection, Repository } from "typeorm";
 import { CustomerEntity } from "../../entities/CustomerEntity";
 import { AddressEntity } from "../../entities/AddressEntity";
+import { AuthService } from "../../services/AuthService";
+import { UserLoginInput, UserRegisterInput } from "../UsersResolver/InputTypes";
+import { LoginOutput } from "../UsersResolver/OutputTypes";
 
 @injectable()
 @Resolver(CustomerType)
@@ -16,10 +19,13 @@ export class CustomersResolver {
 
     constructor(
         @inject(DB_CONNECTION)
-        private connection: Connection
+        private connection: Connection,
+        @inject(AuthService)
+        private auth: AuthService<CustomerEntity>
     ) {
-        this.customers = this.connection.getRepository(CustomerEntity)
-        this.addresses = this.connection.getRepository(AddressEntity)
+        this.customers = connection.getRepository(CustomerEntity)
+        this.addresses = connection.getRepository(AddressEntity)
+        this.auth.bindRepository(this.customers)
     }
 
     @Query(() => [CustomerType])
@@ -74,5 +80,15 @@ export class CustomersResolver {
         await this.addresses.remove(customer.address)
 
         return true
+    }
+
+    @Mutation(() => Boolean)
+    async customerRegister(@Arg('payload') payload: UserRegisterInput) {
+        return await this.auth.register(payload)
+    }
+
+    @Mutation(() => LoginOutput)
+    async customerLogin(@Arg('payload') payload: UserLoginInput) {
+        return await this.auth.login(payload)
     }
 }

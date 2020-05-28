@@ -3,7 +3,7 @@ import { Container } from 'inversify'
 
 export const BCRYPT = Symbol("BCRYPT")
 
-class BCryptHelper {
+export class BCryptHelper {
 
     private salt: string
 

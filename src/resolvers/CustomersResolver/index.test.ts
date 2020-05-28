@@ -7,7 +7,7 @@ import { CustomerEntity } from '../../entities/CustomerEntity'
 import { AddressEntity } from '../../entities/AddressEntity'
 import { setupTest } from '../../tests/setupTest'
 
-describe('customers resolvers', () => {
+describe('customers resolver', () => {
 
     let client: ApolloServerTestClient,
         customers: Repository<CustomerEntity>,
