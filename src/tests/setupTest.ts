@@ -7,6 +7,7 @@ import { CustomerEntity } from "../entities/CustomerEntity"
 import { AddressEntity } from "../entities/AddressEntity"
 import { UsersResolver } from "../resolvers/UsersResolver"
 import { CustomersResolver } from "../resolvers/CustomersResolver"
+import { UserEntity } from "../entities/UserEntity"
 
 export async function setupTest() {
     
@@ -18,7 +19,7 @@ export async function setupTest() {
     const repositories = {
         customers: connection.getRepository(CustomerEntity),
         addresses: connection.getRepository(AddressEntity),
-        users: connection.getRepository(UsersResolver)
+        users: connection.getRepository(UserEntity)
     }
 
     const usersResolver = container.get<UsersResolver>(UsersResolver)
@@ -30,9 +31,15 @@ export async function setupTest() {
             confirm_password: '123456'
         }),
         customersResolver.customerRegister({
+            name: 'customer',
             email: 'customer@example.com',
             password: '123456',
-            confirm_password: '123456'
+            confirm_password: '123456',
+            address: {
+                city: 'foo',
+                street: 'bar',
+                number: '123'
+            }
         })
     ])
     const [

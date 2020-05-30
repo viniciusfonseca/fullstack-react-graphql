@@ -1,4 +1,5 @@
 import { InputType, Field } from "type-graphql";
+import { UserRegisterInput } from "../UsersResolver/InputTypes";
 
 @InputType()
 class AddressInput {
@@ -29,3 +30,13 @@ export class CustomerCreateInput {
 
 @InputType()
 export class CustomerUpdateInput extends CustomerCreateInput {}
+
+@InputType()
+export class CustomerRegisterInput extends UserRegisterInput {
+
+    @Field()
+    name: string
+
+    @Field(() => AddressInput)
+    address: AddressInput
+}

@@ -7,7 +7,9 @@
     "start": "nodemon",
     "sync": "ts-node src/scripts/sync",
     "schema": "ts-node src/scripts/generateSchema",
-    "test": "mocha"
+    "test": "mocha",
+    "build": "tsc",
+    "start:prod": "node dist"
   },
   "mocha": {
     "require": "ts-node/register",

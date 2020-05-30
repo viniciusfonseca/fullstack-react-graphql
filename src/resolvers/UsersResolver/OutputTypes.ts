@@ -1,6 +1,7 @@
 import { UserEntity } from "../../entities/UserEntity";
-import { Field } from "type-graphql";
+import { Field, ObjectType } from "type-graphql";
 
+@ObjectType()
 export class UserOutput {
 
     @Field()
@@ -11,6 +12,7 @@ export class UserOutput {
 
 }
 
+@ObjectType()
 export class LoginOutput {
 
     @Field()

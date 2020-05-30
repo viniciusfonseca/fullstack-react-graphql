@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import { CustomerType } from "../../graphql/CustomerType";
-import { CustomerCreateInput, CustomerUpdateInput } from "./InputTypes";
+import { CustomerCreateInput, CustomerUpdateInput, CustomerRegisterInput } from "./InputTypes";
 import { injectable, inject } from "inversify";
 import { DB_CONNECTION } from "../../services/bindDBConnection";
 import { Connection, Repository } from "typeorm";
@@ -83,7 +83,7 @@ export class CustomersResolver {
     }
 
     @Mutation(() => Boolean)
-    async customerRegister(@Arg('payload') payload: UserRegisterInput) {
+    async customerRegister(@Arg('payload') payload: CustomerRegisterInput) {
         return await this.auth.register(payload)
     }
 

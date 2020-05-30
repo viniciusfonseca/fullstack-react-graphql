@@ -1,12 +1,12 @@
 import { ApolloServerTestClient } from "apollo-server-testing"
 import { Repository } from "typeorm"
-import { UsersResolver } from "."
 import { setupTest } from "../../tests/setupTest"
+import { UserEntity } from "../../entities/UserEntity"
 
 describe('users resolver', () => {
 
     let client: ApolloServerTestClient,
-        users: Repository<UsersResolver>
+        users: Repository<UserEntity>
 
     before(async () => {
 

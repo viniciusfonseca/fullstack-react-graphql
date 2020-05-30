@@ -44,10 +44,7 @@ export class AuthService<T = UserEntity> {
 
         const password = await this.bcrypt.hash(payload.password)
 
-        const user = Object.assign(this.repository.create(), {
-            email: payload.email,
-            password
-        })
+        const user = Object.assign(this.repository.create(), payload, { password })
         await this.connection.manager.save(user)
 
         return true
