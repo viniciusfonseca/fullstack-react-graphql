@@ -12,8 +12,9 @@ jobs:
             - run: npm install
             - run: npm test
             - run: npm run build
+            - run: tar -cvzf build.tar.gz dist
       - store_artifacts:
-          path: build
+          path: build.tar.gz
 workflows:
     test-and-build:
       jobs:
