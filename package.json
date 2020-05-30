@@ -8,7 +8,7 @@
     "sync": "ts-node src/scripts/sync",
     "schema": "ts-node src/scripts/generateSchema",
     "test": "mocha",
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "start:prod": "node dist"
   },
   "mocha": {
@@ -48,6 +48,7 @@
     "chai": "^4.2.0",
     "mocha": "^7.1.2",
     "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.3"
   }
