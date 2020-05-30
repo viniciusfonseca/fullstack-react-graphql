@@ -14,7 +14,7 @@ jobs:
             - run: npm test
             - run: npm run build
       - store_artifacts:
-        path: /tmp/build
+          path: /tmp/build
 workflows:
     test-and-build:
       jobs:
