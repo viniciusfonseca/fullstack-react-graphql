@@ -30,9 +30,9 @@ jobs:
   deploy:
     machine: true
     steps:
-      - gcp-gke/install
-      - gcp-gke/init
-      - gcp-gke/rollout-image:
+      - gke/install
+      - gke/init
+      - gke/rollout-image:
           deployment: cluster-1
           image: gcr.io/quickstart-1566304377815/graphql-app:latest
 workflows:
