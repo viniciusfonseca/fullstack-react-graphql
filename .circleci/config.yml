@@ -1,8 +1,10 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  gke: circleci/gcp-gke@1.14.10
+  gcr: circleci/gcp-gcr@0.7.1
 jobs:
-  test-and-build:
+  build:
     executor:
       name: node/default
     steps:
@@ -15,7 +17,28 @@ jobs:
             - run: tar -cvzf build.tar.gz dist
       - store_artifacts:
           path: build.tar.gz
+  push:
+    steps:
+      - checkout
+      - gcr/gcr-auth
+      - gcr/build-image:
+          image: graphql-app
+      - gcr/push-image:
+          image: graphql-app
+  deploy:
+    steps:
+      - gcp-gke/install
+      - gcp-gke/init
+      - gcp-gke/rollout-image:
+          deployment: cluster-1
+          image: gcr.io/quickstart-1566304377815/graphql-app:latest
 workflows:
-    test-and-build:
+    build:
       jobs:
-        - test-and-build
+        - build
+        - push
+            requires:
+              - build
+        - deploy
+            requires:
+              - push
