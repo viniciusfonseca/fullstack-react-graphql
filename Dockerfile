@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 4000
 
-RUN npm run start:prod
+CMD ["npm", "run", "start:prod"]
