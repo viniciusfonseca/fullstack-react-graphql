@@ -13,8 +13,8 @@ workflows:
       jobs:
         - deploy
         - gke/publish-and-rollout-image:
-          cluster: cluster-1
-          container: app
-          deployment: graphql-app
-          image: graphql-app
-          tag: $CIRCLE_SHA1
+            cluster: cluster-1
+            container: app
+            deployment: graphql-app
+            image: graphql-app
+            tag: $CIRCLE_SHA1
