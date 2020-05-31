@@ -8,7 +8,7 @@
     "sync": "ts-node src/scripts/sync",
     "schema": "ts-node src/scripts/generateSchema",
     "test": "mocha",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc --build tsconfig.json",
     "start:prod": "node dist"
   },
   "mocha": {
