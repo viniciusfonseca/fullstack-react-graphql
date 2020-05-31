@@ -1,47 +1,21 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
-  gke: circleci/gcp-gke@1.0.4
+  gcp-gke: circleci/gcp-gke@1.0.4
   gcr: circleci/gcp-gcr@0.7.1
 jobs:
-  build:
-    machine: true
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
-            - run: npm run build
-            - run: tar -cvzf build.tar.gz dist
-      - store_artifacts:
-          path: build.tar.gz
-  push:
-    machine: true
-    steps:
-      - checkout
-      - gcr/gcr-auth
-      - gcr/build-image:
-          image: graphql-app
-      - gcr/push-image:
-          image: graphql-app
   deploy:
     machine: true
     steps:
-      - gke/install
-      - gke/init
-      - gke/rollout-image:
-          deployment: cluster-1
-          image: gcr.io/quickstart-1566304377815/graphql-app:latest
+      - checkout
+      - gcp-gke/install
+      - gcp-gke/publish-and-rollout-image:
+          cluster: cluster-1
+          container: app
+          deployment: graphql-app
+          image: graphql-app
+          tag: $CIRCLE_SHA1
 workflows:
     build:
       jobs:
-        - build
-        - push:
-            requires:
-              - build
-        - deploy:
-            requires:
-              - push
+        - deploy
