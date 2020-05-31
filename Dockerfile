@@ -3,13 +3,12 @@ FROM node:latest
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY tsconfig.json ./
 
 RUN npm install
 RUN npm run build
 
 COPY . .
-
-COPY package*.json ./
 
 EXPOSE 4000
 
