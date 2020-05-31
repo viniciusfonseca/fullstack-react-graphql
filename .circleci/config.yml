@@ -13,7 +13,6 @@ workflows:
       jobs:
         - deploy
         - gke/publish-and-rollout-image:
-            requires: deploy
             cluster: cluster-1
             container: app
             deployment: graphql-app
