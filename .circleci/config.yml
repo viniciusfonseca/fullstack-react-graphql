@@ -8,7 +8,7 @@ workflows:
       jobs:
         - gke/publish-and-rollout-image:
             cluster: cluster-1
-            container: default-pool
+            container: graphql-app-service
             deployment: graphql-app
             image: graphql-app
             tag: $CIRCLE_SHA1
