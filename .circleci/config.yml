@@ -29,7 +29,7 @@ jobs:
           name: Deploy to F1 Micro VM
           command: |
             source $BASH_ENV 
-            ssh -i .ssh/id_rsa_c5bbfd1b2d31f5801d25b2b7f244f3b7 -o StrictHostKeyChecking=no $VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
+            ssh -i ~/.ssh/id_rsa_c5bbfd1b2d31f5801d25b2b7f244f3b7 -o StrictHostKeyChecking=no $VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
 
 workflows:
     build:
