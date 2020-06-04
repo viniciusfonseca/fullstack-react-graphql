@@ -3,12 +3,22 @@ orbs:
   node: circleci/node@1.1.6
   gke: circleci/gcp-gke@1.0.4
   gcr: circleci/gcp-gcr@0.7.1
+jobs:
+  build:
+    docker:
+      - image: node:latest
+    steps:
+      - checkout
+      - run: export IMAGE_NAME=fullstack-react-graphql
+      - run: export PORT=4000
+      - run: export VM_IP=35.224.135.155
+      - run: export TGT_IMAGE=$DOCKER_ID/$IMAGE_NAME:$TAG
+      - run: docker build -t $TGT_IMAGE
+      - run: echo $DOCKER_PWD | docker login -u $DOCKER_ID --password-stdin
+      - run: docker push $TGT_IMAGE
+      - run: ssh -o StrictHostKeyChecking=no $DOCKER_ID@$VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
+
 workflows:
     build:
       jobs:
-        - gke/publish-and-rollout-image:
-            cluster: cluster-1
-            container: graphql-app-sha256-1
-            deployment: graphql-app
-            image: graphql-app
-            tag: $CIRCLE_SHA1
+        - deploy
