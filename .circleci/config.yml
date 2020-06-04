@@ -17,7 +17,7 @@ jobs:
           command: |
             echo 'export IMAGE_NAME=fullstack-react-graphql' >> $BASH_ENV
             echo 'export PORT=4000' >> $BASH_ENV
-            echo 'export VM_IP=35.224.135.155' >> $BASH_ENV
+            echo 'export VM_IP="35.224.135.155"' >> $BASH_ENV
             echo 'export TGT_IMAGE=$DOCKER_ID/$IMAGE_NAME:${CIRCLE_SHA1}' >> $BASH_ENV
       - run:
           name: Docker Build and Push
@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Deploy to F1 Micro VM
           command: |
-            ssh -o StrictHostKeyChecking=no $DOCKER_ID@$VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
+            ssh -o StrictHostKeyChecking=no $VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
 
 workflows:
     build:
