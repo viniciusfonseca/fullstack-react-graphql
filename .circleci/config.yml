@@ -11,6 +11,7 @@ jobs:
           fingerprints:
             - "c5:bb:fd:1b:2d:31:f5:80:1d:25:b2:b7:f2:44:f3:b7"
       - checkout
+      - setup_remote_docker
       - run:
           name: Setup Env
           command: |
