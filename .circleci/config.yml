@@ -4,7 +4,7 @@ orbs:
   gke: circleci/gcp-gke@1.0.4
   gcr: circleci/gcp-gcr@0.7.1
 jobs:
-  build:
+  deploy:
     docker:
       - image: node:latest
     steps:
