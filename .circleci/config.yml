@@ -9,6 +9,7 @@ jobs:
       - image: node:latest
     steps:
       - checkout
+      - setup_remote_docker
       - run: export IMAGE_NAME=fullstack-react-graphql
       - run: export PORT=4000
       - run: export VM_IP=35.224.135.155
