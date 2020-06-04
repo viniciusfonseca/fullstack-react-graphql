@@ -21,7 +21,7 @@ jobs:
       - run: echo 'export IMAGE_NAME=fullstack-react-graphql' >> $BASH_ENV
       - run: echo 'export PORT=4000' >> $BASH_ENV
       - run: echo 'export VM_IP=35.224.135.155' >> $BASH_ENV
-      - run: echo 'export TGT_IMAGE=$DOCKER_ID/$IMAGE_NAME:$IMAGETAG' >> $BASH_ENV
+      - run: echo 'export TGT_IMAGE=$DOCKER_ID/$IMAGE_NAME:${TAG}' >> $BASH_ENV
       - run: docker build -t $TGT_IMAGE
       - run: echo $DOCKER_PWD | docker login -u $DOCKER_ID --password-stdin
       - run: docker push $TGT_IMAGE
