@@ -4,6 +4,7 @@ orbs:
 jobs:
   deploy:
     docker:
+      - image: docker:17.05.0-ce-git
       - image: node:latest
     steps:
       - add_ssh_keys:
