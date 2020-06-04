@@ -29,6 +29,7 @@ jobs:
       - run:
           name: Deploy to F1 Micro VM
           command: |
+            source $BASH_ENV 
             ssh -o StrictHostKeyChecking=no $VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
 
 workflows:
