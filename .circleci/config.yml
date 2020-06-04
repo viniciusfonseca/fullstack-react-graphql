@@ -21,9 +21,9 @@ jobs:
       - run: export PORT=4000
       - run: export VM_IP=35.224.135.155
       - run: export TGT_IMAGE=$DOCKER_ID/$IMAGE_NAME:$TAG
-      - run: docker build -t $TGT_IMAGE
-      - run: echo $DOCKER_PWD | docker login -u $DOCKER_ID --password-stdin
-      - run: docker push $TGT_IMAGE
+      - run: /usr/bin/docker build -t $TGT_IMAGE
+      - run: echo $DOCKER_PWD | /usr/bin/docker login -u $DOCKER_ID --password-stdin
+      - run: /usr/bin/docker push $TGT_IMAGE
       - run: ssh -o StrictHostKeyChecking=no $DOCKER_ID@$VM_IP "/bin/bash ~/deploy_docker.sh $TGT_IMAGE $IMAGE_NAME $PORT"
 
 workflows:
