@@ -25,11 +25,11 @@ jobs:
             echo 'export PORT=4000' >> $BASH_ENV
             echo 'export VM_IP=35.224.135.155' >> $BASH_ENV
             echo 'export TGT_IMAGE=$DOCKER_ID/$IMAGE_NAME:${CIRCLE_SHA1}' >> $BASH_ENV
-            source $BASH_ENV 
       - run:
           name: Docker Build and Push
           command: |
-            docker build -t $TGT_IMAGE
+            source $BASH_ENV 
+            docker build -t $TGT_IMAGE .
             echo $DOCKER_PWD | docker login -u $DOCKER_ID --password-stdin
             docker push $TGT_IMAGE
       - run:
