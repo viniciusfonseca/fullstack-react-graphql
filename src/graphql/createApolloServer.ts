@@ -10,14 +10,14 @@ export async function createApolloServer(
 
     const schema = await createSchema(container)
 
-    const server = new ApolloServer({
+    return new ApolloServer({
         schema,
         tracing: true,
         cacheControl: true,
+        playground: true,
+        introspection: true,
         context(context) {
             return contextProvider(context, container)
         }
     })
-
-    return server
 }

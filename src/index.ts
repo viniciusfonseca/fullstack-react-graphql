@@ -5,6 +5,7 @@ import { createApolloServer } from './graphql/createApolloServer';
 import { createContainer } from './services/createContainer';
 import * as http from 'http'
 import { EventEmitter } from 'events'
+import { NowRequest, NowResponse } from '@vercel/node'
 
 let httpServer: http.Server = null
 let evt = new EventEmitter()
@@ -24,16 +25,16 @@ async function main() {
 
 main()
 
-module.exports = http.createServer((req, res) => {
-
+function ServerlessExport(req: NowRequest, res: NowResponse) {
     function onServerReady() {
         httpServer.emit('request', req, res)
     }
-
     if (!httpServer) {
         evt.once('ready', onServerReady)
-        return
     }
+    else {
+        onServerReady()
+    }
+}
 
-    onServerReady()
-})
+module.exports = ServerlessExport
